@@ -1,6 +1,14 @@
 # preditClickOpenCPU
 
-To be called by OpenCPU for predicting pageviews
+## Upload the package to Github then...
+
+Set up a Github webhook so changes appear on OpenCPU
+
+![github webhook](github_webhook.png)
+
+## OpenCPU
+
+This package is then called by OpenCPU for predicting pageviews.
 
 Available on
 
