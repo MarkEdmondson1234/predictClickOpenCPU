@@ -75,4 +75,52 @@ $probability
 [1] 0.9663907
 ```
 
+## Call this from JavaScript
 
+https://www.opencpu.org/jslib.html
+
+https://github.com/jeroenooms/opencpu.js
+
+http://jsfiddle.net/user/opencpu/fiddles/
+
+
+## GTM script
+
+Adapted from http://jsfiddle.net/opencpu/WVWCR/ 
+
+Install these:
+```
+<script src="js/jquery.js"></script>
+<script src="js/opencpu.js"></script>
+
+```
+
+Call in GTM via:
+```
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script> 
+<script src="//www.opencpu.org/js/archive/opencpu-0.4.js"></script>
+//set CORS to call "predictClickOpenCPU" package on public server
+ocpu.seturl("//public.opencpu.org/ocpu/github/MarkEdmondson1234/predictClickOpenCPU/R")
+
+//some example data
+//to run with different data, edit and press Run at the top of the page
+var mydata = [
+  {{from.gtm}}   
+];
+
+//call R function: predictClickOpenCPU::predictMarkov(pageview_names=mydata)
+function(){
+  var req = ocpu.rpc("predictMarkov", {
+    pageview_names : mydata
+  }, function(output){
+    return(output);
+  }
+  
+  )
+};
+
+  //optional
+  req.fail(function(){
+    alert("R returned an error: " + req.responseText); 
+  });
+```
