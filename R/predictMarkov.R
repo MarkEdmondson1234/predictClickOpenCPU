@@ -13,7 +13,7 @@ predictMarkov <- function(pageview_names) {
 
   startPattern <- new("Pattern", sequence = pv_n)
 
-  predit <- predict(mc, startPattern)
+  predit <- clickstream::predict(mc, startPattern)
 
   list(page = predit@sequence,
        probability = predit@probability)

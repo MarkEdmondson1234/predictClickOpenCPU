@@ -36,3 +36,12 @@ Then GET that URL:
 curl:
 `curl https://public.opencpu.org/ocpu/tmp/x04c642226d/R/.val/print`
 
+```
+$page
+[1] "site_search"
+
+$probability
+[1] 0.6643936
+```
+
+
