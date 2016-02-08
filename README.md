@@ -16,7 +16,30 @@ See details: https://www.opencpu.org/api.html#api-ci
 
 Test at: https://public.opencpu.org/ocpu/test/#
 
+## Direct result
+
 Call via a POST to:
+https://public.opencpu.org/ocpu/github/MarkEdmondson1234/predictClickOpenCPU/R/predictMarkov/json
+
+with params: 
+
+`pageview_names`
+`["/","site_search","/da/danmark/musik/tag-til-julekoncert"]`
+
+![Open CPU example](openCPUdemo.png)
+
+### Output JSON
+
+```
+{
+  "page": ["da/search/tellus/planning-map"],
+  "probability": [0.9664]
+}
+```
+
+## More details on request
+
+Call via a POST without /json to:
 
 https://public.opencpu.org/ocpu/github/MarkEdmondson1234/predictClickOpenCPU/R/predictMarkov
 
@@ -25,7 +48,7 @@ with params:
 `pageview_names`
 `["/","site_search","/da/danmark/musik/tag-til-julekoncert"]`
 
-![Open CPU example](openCPUdemo.png)
+
 
 Will produce a temporary session URL.
 
