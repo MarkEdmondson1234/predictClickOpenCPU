@@ -1,4 +1,4 @@
-Package: preditClickOpenCPU
+Package: predictClickOpenCPU
 Type: Package
 Title: Markov Prediction for OpenCPU
 Version: 0.1.0
