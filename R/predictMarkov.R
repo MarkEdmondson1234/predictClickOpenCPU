@@ -3,6 +3,7 @@
 #' @param pageview_names A character vector of pageview names
 #'
 #' @return The prediction
+#' @import clickstream
 #' @export
 predictMarkov <- function(pageview_names) {
 
@@ -13,7 +14,7 @@ predictMarkov <- function(pageview_names) {
 
   startPattern <- new("Pattern", sequence = pv_n)
 
-  predit <- clickstream::predict(mc, startPattern)
+  predit <- predict(mc, startPattern)
 
   list(page = predit@sequence,
        probability = predit@probability)
