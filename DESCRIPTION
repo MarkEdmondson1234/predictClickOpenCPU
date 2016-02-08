@@ -1,0 +1,11 @@
+Package: preditClickOpenCPU
+Type: Package
+Title: Markov Prediction for OpenCPU
+Version: 0.1.0
+Authors@R: c(person("Mark", "Edmondson",email = "mark@iihnordic.com",
+                  role = c("aut", "cre")))
+Description: OpenCPU calls this to predict the next pageview
+License: MIT
+Imports:
+    clickstream (>= 1.1.6)
+LazyData: TRUE
