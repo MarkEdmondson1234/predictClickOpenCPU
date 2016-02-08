@@ -22,7 +22,7 @@ https://public.opencpu.org/ocpu/github/MarkEdmondson1234/predictClickOpenCPU/R/p
 
 with params: 
 
-`pageview_names:`
+`pageview_names`
 `["/","site_search","/da/danmark/musik/tag-til-julekoncert"]`
 
 ![Open CPU example](openCPUdemo.png)
@@ -38,10 +38,10 @@ curl:
 
 ```
 $page
-[1] "site_search"
+[1] "da/search/tellus/planning-map"
 
 $probability
-[1] 0.6643936
+[1] 0.9663907
 ```
 
 
