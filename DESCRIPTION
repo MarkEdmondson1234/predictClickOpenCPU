@@ -7,6 +7,6 @@ Authors@R: c(person("Mark", "Edmondson",email = "mark@iihnordic.com",
 Description: OpenCPU calls this to predict the next pageview
 License: MIT
 Imports:
-    clickstream (>= 1.1.6)
+    clickstream (>= 1.1.5)
 LazyData: TRUE
 RoxygenNote: 5.0.1
