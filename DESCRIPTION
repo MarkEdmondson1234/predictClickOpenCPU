@@ -9,3 +9,4 @@ License: MIT
 Imports:
     clickstream (>= 1.1.6)
 LazyData: TRUE
+RoxygenNote: 5.0.1
