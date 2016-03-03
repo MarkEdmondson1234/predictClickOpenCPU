@@ -32,7 +32,7 @@ https://MarkEdmondson1234.ocpu.io/predictClickOpenCPU/R/predictMarkov/json
 with params: 
 
 `pageview_names`
-`["/","site_search","/da/danmark/musik/tag-til-julekoncert"]`
+`["/example/96","/example/213","/example/107"]`
 
 ![Open CPU example](openCPUdemo.png)
 
