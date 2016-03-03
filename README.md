@@ -27,7 +27,7 @@ Test at: https://public.opencpu.org/ocpu/test/#
 ## Direct result
 
 Call via a POST to:
-https://public.opencpu.org/ocpu/github/MarkEdmondson1234/predictClickOpenCPU/R/predictMarkov/json
+https://MarkEdmondson1234.ocpu.io/predictClickOpenCPU/R/predictMarkov/json
 
 with params: 
 
