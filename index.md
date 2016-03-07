@@ -8,6 +8,10 @@ An example and proof of concept is shown below, taking the example of a content 
 
 This presentation was given at MeasureCamp on the 5th March, 2016.  It will be available on the [IIH Nordic Blog](http://www.iihnordic.dk/blog)
 
+The overview of the data architecture from the presenation is here:
+
+![data architecture](predictClickDataArchitecture.png)
+
 ## Example website
 
 A live example with a GTM container calling OpenCPU for content predictions, as shown in the presentation is available in this [Github project, here](/predictClickOpenCPU/example/107.html)
