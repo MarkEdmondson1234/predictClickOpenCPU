@@ -1,34 +1,34 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Creating a content recommendation engine using R, OpenCPU and GTM by MarkEdmondson1234</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-light.css">
-    <meta name="viewport" content="width=device-width">
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
+
+    <title>Creating a content recommendation engine using R, OpenCPU and GTM by MarkEdmondson1234</title>
   </head>
+
   <body>
-    <div class="wrapper">
-      <header>
+    <header>
+      <div class="inner">
         <h1>Creating a content recommendation engine using R, OpenCPU and GTM</h1>
-        <p>Proof of concept for connecting Google Tag Manager to R</p>
+        <h2>Proof of concept for connecting Google Tag Manager to R</h2>
+        <a href="https://github.com/MarkEdmondson1234/predictClickOpenCPU" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
 
-        <p class="view"><a href="https://github.com/MarkEdmondson1234/predictClickOpenCPU">View the Project on GitHub <small>MarkEdmondson1234/predictClickOpenCPU</small></a></p>
-
-
-        <ul>
-          <li><a href="https://github.com/MarkEdmondson1234/predictClickOpenCPU/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/MarkEdmondson1234/predictClickOpenCPU/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/MarkEdmondson1234/predictClickOpenCPU">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <h1>
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
 <a id="connecting-r-and-google-tag-manager-with-opencpu" class="anchor" href="#connecting-r-and-google-tag-manager-with-opencpu" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Connecting R and Google Tag Manager with OpenCPU</h1>
 
 <p>Enriching the dataLAyer of Google Tag Manager with data from R functions opens up many possibilities.  This is possible with <a href="https://www.opencpu.org">OpenCPU</a>, which turns R packages into a robust API.</p>
@@ -43,17 +43,12 @@
 <h2>
 <a id="example-website" class="anchor" href="#example-website" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example website</h2>
 
-<p>A live example with a GTM container calling OpenCPU for content predictions, as shown in the presentation is available in this <a href="/example/107.html">Github project, here</a></p>
+<p>A live example with a GTM container calling OpenCPU for content predictions, as shown in the presentation is available in this <a href="/predictClickOpenCPU/example/107.html">Github project, here</a></p>
 
 <h2>
 <a id="r-package-called-from-opencpu" class="anchor" href="#r-package-called-from-opencpu" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>R package called from OpenCPU</h2>
 
 <p>This Github repository is also the Github R library called by OpenCPU.  See the R code for the package and the <a href="https://github.com/MarkEdmondson1234/predictClickOpenCPU">model data here.</a></p>
-
-<h2>
-<a id="r-code-to-generate-the-model" class="anchor" href="#r-code-to-generate-the-model" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>R code to generate the model</h2>
-
-<p>The R code to create the model is shown below:</p>
 
 <h2>
 <a id="using-opencpu" class="anchor" href="#using-opencpu" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using OpenCPU</h2>
@@ -62,10 +57,44 @@
 
 <p>For production use though, you will want your own server, either using OpenCPU or the paid for alternatives such as <a href="http://www.yhat.com">yhat</a> or <a href="https://www.dominodatalab.com">Domino Data Lab</a></p>
 
+<p>This Github repository is available on OpenCPU at this URL:
+<a href="https://MarkEdmondson1234.ocpu.io/predictClickOpenCPU/">https://MarkEdmondson1234.ocpu.io/predictClickOpenCPU/</a></p>
+
+<p>See details on how to use OpenCPU here: <a href="https://www.opencpu.org/api.html#api-ci">https://www.opencpu.org/api.html#api-ci</a></p>
+
+<h3>
+<a id="test-the-r-api-package" class="anchor" href="#test-the-r-api-package" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Test the R API package</h3>
+
+<p>Test at: <a href="https://public.opencpu.org/ocpu/test/">https://public.opencpu.org/ocpu/test/</a></p>
+
+<p>Create a POST hit to this URL:</p>
+
+<p><code>https://MarkEdmondson1234.ocpu.io/predictClickOpenCPU/R/predictMarkov/json</code></p>
+
+<p>...with the parameters:</p>
+
+<p><code>pageview_names</code></p>
+
+<p><code>["/example/96","/example/213","/example/107"]</code></p>
+
+<p>If successful you should see a 200 response code with the following JSON:</p>
+
+<pre><code>{
+  "page": ["da/search/tellus/planning-map"],
+  "probability": [0.9664]
+}
+</code></pre>
+
+<h2>
+<a id="r-code-to-generate-the-model" class="anchor" href="#r-code-to-generate-the-model" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>R code to generate the model</h2>
+
+<p>The R code to create the model is shown below:</p>
+
 <h3>
 <a id="fetching-google-analytics-data" class="anchor" href="#fetching-google-analytics-data" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fetching Google Analytics data</h3>
 
-<div class="highlight highlight-source-r"><pre>library(<span class="pl-smi">googleAnalyticsR</span>) <span class="pl-c">## from https://github.com/MarkEdmondson1234/googleAnalyticsR_public</span>
+<div class="highlight highlight-source-r"><pre><span class="pl-c">## from https://github.com/MarkEdmondson1234/googleAnalyticsR_public</span>
+library(<span class="pl-smi">googleAnalyticsR</span>) 
 ga_auth()
 
 <span class="pl-smi">gaId</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">xxxx</span> <span class="pl-c"># GA ViewId</span>
@@ -255,13 +284,25 @@ plot(<span class="pl-smi">sub_graph</span>, <span class="pl-v">edge.label</span>
   });
 
 <span class="pl-k">&lt;</span><span class="pl-k">/</span>script<span class="pl-k">&gt;</span></pre></div>
-      </section>
-      <footer>
-        <p>This project is maintained by <a href="https://github.com/MarkEdmondson1234">MarkEdmondson1234</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
-      </footer>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/MarkEdmondson1234/predictClickOpenCPU/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/MarkEdmondson1234/predictClickOpenCPU/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/MarkEdmondson1234/predictClickOpenCPU"></a> is maintained by <a href="https://github.com/MarkEdmondson1234">MarkEdmondson1234</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
     </div>
-    <script src="javascripts/scale.fix.js"></script>
-    
+
+  
   </body>
 </html>
