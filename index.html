@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Markov Model for OpenCPU by MarkEdmondson1234</title>
+    <title>Creating a content recommendation engine using R, OpenCPU and GTM by MarkEdmondson1234</title>
 
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/github-light.css">
@@ -13,17 +13,10 @@
     <![endif]-->
   </head>
   <body>
-    <noscript><iframe src="//www.googletagmanager.com/ns.html?id=GTM-MN52Z6"
-height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MN52Z6');</script>
     <div class="wrapper">
       <header>
-        <h1>Markov Model for OpenCPU</h1>
-
+        <h1>Creating a content recommendation engine using R, OpenCPU and GTM</h1>
+        <p>Proof of concept for connecting Google Tag Manager to R</p>
 
         <p class="view"><a href="https://github.com/MarkEdmondson1234/predictClickOpenCPU">View the Project on GitHub <small>MarkEdmondson1234/predictClickOpenCPU</small></a></p>
 
@@ -35,17 +28,240 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </ul>
       </header>
       <section>
-        <h2>
-<a id="github-page-with-gtm-added" class="anchor" href="#github-page-with-gtm-added" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Github page with GTM added</h2>
+        <h1>
+<a id="connecting-r-and-google-tag-manager-with-opencpu" class="anchor" href="#connecting-r-and-google-tag-manager-with-opencpu" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Connecting R and Google Tag Manager with OpenCPU</h1>
 
-<p>An example website for demonstrating calling a Markov model made in R via OpenCPU into Google Tag Manager.</p>
-<p>Example page starts here: <a href="http://code.markedmondson.me/predictClickOpenCPU/example/107.html">Content Recommendation</a></p>
+<p>Enriching the dataLAyer of Google Tag Manager with data from R functions opens up many possibilities.  This is possible with <a href="https://www.opencpu.org">OpenCPU</a>, which turns R packages into a robust API.</p>
+
+<p>An example and proof of concept is shown below, taking the example of a content recommendation engine making predictions based on what a user has viewed in their session.</p>
+
+<h2>
+<a id="creating-a-content-recommendation-engine-with-r-opencpu-and-gtm" class="anchor" href="#creating-a-content-recommendation-engine-with-r-opencpu-and-gtm" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating a content recommendation engine with R, OpenCPU and GTM</h2>
+
+<p>This presentation was given at MeasureCamp on the 5th March, 2016.  It will be available on the <a href="http://www.iihnordic.dk/blog">IIH Nordic Blog</a></p>
+
+<h2>
+<a id="example-website" class="anchor" href="#example-website" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example website</h2>
+
+<p>A live example with a GTM container calling OpenCPU for content predictions, as shown in the presentation is available in this <a href="/example/107.html">Github project, here</a></p>
+
+<h2>
+<a id="r-package-called-from-opencpu" class="anchor" href="#r-package-called-from-opencpu" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>R package called from OpenCPU</h2>
+
+<p>This Github repository is also the Github R library called by OpenCPU.  See the R code for the package and the <a href="https://github.com/MarkEdmondson1234/predictClickOpenCPU">model data here.</a></p>
+
+<h2>
+<a id="r-code-to-generate-the-model" class="anchor" href="#r-code-to-generate-the-model" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>R code to generate the model</h2>
+
+<p>The R code to create the model is shown below:</p>
+
+<h2>
+<a id="using-opencpu" class="anchor" href="#using-opencpu" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Using OpenCPU</h2>
+
+<p>You can test the model works in the API by using the test public server. </p>
+
+<p>For production use though, you will want your own server, either using OpenCPU or the paid for alternatives such as <a href="http://www.yhat.com">yhat</a> or <a href="https://www.dominodatalab.com">Domino Data Lab</a></p>
+
+<h3>
+<a id="fetching-google-analytics-data" class="anchor" href="#fetching-google-analytics-data" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fetching Google Analytics data</h3>
+
+<div class="highlight highlight-source-r"><pre>library(<span class="pl-smi">googleAnalyticsR</span>) <span class="pl-c">## from https://github.com/MarkEdmondson1234/googleAnalyticsR_public</span>
+ga_auth()
+
+<span class="pl-smi">gaId</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">xxxx</span> <span class="pl-c"># GA ViewId</span>
+
+<span class="pl-c">## dimension3 contains userId in format:</span>
+<span class="pl-c">## sl=1&amp;u={cid}&amp;t={timestamp}</span>
+<span class="pl-smi">raw</span> <span class="pl-k">&lt;-</span> google_analytics(<span class="pl-smi">gaId</span>,
+                        <span class="pl-v">start</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>2016-02-01<span class="pl-pds">"</span></span>,
+                        <span class="pl-v">end</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>2016-02-01<span class="pl-pds">"</span></span>,
+                        <span class="pl-v">metrics</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>pageviews<span class="pl-pds">"</span></span>),
+                        <span class="pl-v">dimensions</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>dimension3<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>pagePath<span class="pl-pds">"</span></span>),
+                        <span class="pl-c"># samplingLevel = "WALK",</span>
+                        <span class="pl-v">filters</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>ga:dimension3!~_scUid<span class="pl-pds">"</span></span>,
+                        <span class="pl-v">max_results</span> <span class="pl-k">=</span> <span class="pl-c1">20000</span>)
+</pre></div>
+
+<h3>
+<a id="transforming-the-data-into-a-form-suitable-for-the-the-model" class="anchor" href="#transforming-the-data-into-a-form-suitable-for-the-the-model" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Transforming the data into a form suitable for the the model</h3>
+
+<div class="highlight highlight-source-r"><pre><span class="pl-smi">split_regex</span> <span class="pl-k">&lt;-</span> <span class="pl-s"><span class="pl-pds">"</span>u=(.+)&amp;t=(.+)<span class="pl-pds">"</span></span>
+
+<span class="pl-smi">processed</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">raw</span> %<span class="pl-k">&gt;</span>% <span class="pl-e">tidyr</span><span class="pl-k">::</span>extract(<span class="pl-smi">dimension3</span>, 
+                             c(<span class="pl-s"><span class="pl-pds">"</span>cid<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>timestamp<span class="pl-pds">"</span></span>),
+                             <span class="pl-smi">split_regex</span>)
+
+<span class="pl-c">## javascript to R timestamp</span>
+<span class="pl-smi">processed</span><span class="pl-k">$</span><span class="pl-smi">timestamp</span> <span class="pl-k">&lt;-</span> as.POSIXct(as.numeric(<span class="pl-smi">processed</span><span class="pl-k">$</span><span class="pl-smi">timestamp</span>) <span class="pl-k">/</span> <span class="pl-c1">1000</span>, 
+                             <span class="pl-v">origin</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>1970-01-01<span class="pl-pds">"</span></span>)
+
+<span class="pl-c">## find users with session length &gt; 1</span>
+<span class="pl-smi">nonbounce</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">processed</span> %<span class="pl-k">&gt;</span>% group_by(<span class="pl-smi">cid</span>) %<span class="pl-k">&gt;</span>% 
+  summarise(<span class="pl-v">session_length</span> <span class="pl-k">=</span> n()) %<span class="pl-k">&gt;</span>% filter(<span class="pl-smi">session_length</span> <span class="pl-k">&gt;</span> <span class="pl-c1">1</span>) %<span class="pl-k">&gt;</span>% ungroup()
+
+<span class="pl-smi">processed</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">nonbounce</span> %<span class="pl-k">&gt;</span>% left_join(<span class="pl-smi">processed</span>)
+
+<span class="pl-smi">processed</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">processed</span> %<span class="pl-k">&gt;</span>% arrange(<span class="pl-smi">cid</span>, <span class="pl-smi">timestamp</span>)
+
+<span class="pl-c">## for each cid, make a string of pagePath in timestamp order</span>
+<span class="pl-smi">sequence</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">processed</span> %<span class="pl-k">&gt;</span>% group_by(<span class="pl-smi">cid</span>) %<span class="pl-k">&gt;</span>% 
+  summarise(<span class="pl-v">sequence</span> <span class="pl-k">=</span> paste(<span class="pl-smi">aggregation</span>, <span class="pl-v">collapse</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>,<span class="pl-pds">"</span></span>))
+
+<span class="pl-smi">sequence</span> <span class="pl-k">&lt;-</span> paste(<span class="pl-smi">sequence</span><span class="pl-k">$</span><span class="pl-smi">cid</span>, <span class="pl-smi">sequence</span><span class="pl-k">$</span><span class="pl-smi">sequence</span>, <span class="pl-v">sep</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>,<span class="pl-pds">"</span></span>)
+</pre></div>
+
+<h3>
+<a id="creating-the-model" class="anchor" href="#creating-the-model" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating the model</h3>
+
+<div class="highlight highlight-source-r"><pre>library(<span class="pl-smi">clickstream</span>)
+
+<span class="pl-c"># fitting a simple Markov chain and predicting the next click</span>
+<span class="pl-smi">clickstreams</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">sequence</span>
+<span class="pl-smi">csf</span> <span class="pl-k">&lt;-</span> tempfile()
+writeLines(<span class="pl-smi">clickstreams</span>, <span class="pl-smi">csf</span>)
+<span class="pl-smi">cls</span> <span class="pl-k">&lt;-</span> readClickstreams(<span class="pl-smi">csf</span>, <span class="pl-v">header</span> <span class="pl-k">=</span> <span class="pl-c1">TRUE</span>)
+
+<span class="pl-c">## Make the model:</span>
+
+<span class="pl-c">## 1612 users - 285 seconds</span>
+<span class="pl-smi">model</span> <span class="pl-k">&lt;-</span> fitMarkovChain(<span class="pl-smi">cls</span>, <span class="pl-v">verbose</span><span class="pl-k">=</span><span class="pl-c1">TRUE</span>)
+
+<span class="pl-c">### Using the model:</span>
+
+<span class="pl-c">## get the likely pages a user starts from</span>
+<span class="pl-smi">likely_start</span> <span class="pl-k">&lt;-</span> as.data.frame(<span class="pl-smi">model</span><span class="pl-k">@</span><span class="pl-smi">start</span>)
+<span class="pl-smi">likely_start</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">likely_start</span>[order(<span class="pl-smi">likely_start</span><span class="pl-k">$</span><span class="pl-smi">Freq</span>, <span class="pl-v">decreasing</span> <span class="pl-k">=</span> <span class="pl-c1">TRUE</span>),]
+
+<span class="pl-c">## List of pages in the model</span>
+states(<span class="pl-smi">model</span>)
+
+<span class="pl-c">## Prediction:</span>
+<span class="pl-smi">startPattern</span> <span class="pl-k">&lt;-</span> new(<span class="pl-s"><span class="pl-pds">"</span>Pattern<span class="pl-pds">"</span></span>, <span class="pl-v">sequence</span> <span class="pl-k">=</span> c(<span class="pl-s"><span class="pl-pds">"</span>blog<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>sydjylland<span class="pl-pds">"</span></span>))
+predict(<span class="pl-smi">model</span>, <span class="pl-smi">startPattern</span>)
+
+<span class="pl-c">## pages that absorb (e.g. are last in session)</span>
+<span class="pl-smi">last_pages</span> <span class="pl-k">&lt;-</span> absorbingStates(<span class="pl-smi">model</span>)
+
+<span class="pl-c">## model is saved so it can be uploaded to the R package for the predictions:</span>
+save(<span class="pl-smi">model</span>, <span class="pl-v">file</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>./data/model.RData<span class="pl-pds">"</span></span>)
+</pre></div>
+
+<h3>
+<a id="plotting-the-model" class="anchor" href="#plotting-the-model" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Plotting the model</h3>
+
+<p>If you want to see the model, the below helps plot it:</p>
+
+<div class="highlight highlight-source-r"><pre>library(<span class="pl-smi">igraph</span>)
+<span class="pl-smi">example_graph</span> <span class="pl-k">&lt;-</span> <span class="pl-e">igraph</span><span class="pl-k">::</span>graph.adjacency(t(as.matrix(<span class="pl-smi">model</span><span class="pl-k">@</span><span class="pl-smi">transitions</span>[[<span class="pl-c1">1</span>]])), 
+                                 <span class="pl-v">weighted</span> <span class="pl-k">=</span> <span class="pl-c1">T</span>)
+                                 <span class="pl-smi">likely_start</span> <span class="pl-k">&lt;-</span> as.data.frame(<span class="pl-smi">example_mc</span><span class="pl-k">@</span><span class="pl-smi">start</span>)
+<span class="pl-smi">likely_start</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">likely_start</span>[order(<span class="pl-smi">likely_start</span><span class="pl-k">$</span><span class="pl-smi">Freq</span>, <span class="pl-v">decreasing</span> <span class="pl-k">=</span> <span class="pl-c1">TRUE</span>),]
+
+<span class="pl-smi">likely_plot</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">likely_start</span>[order(<span class="pl-smi">likely_start</span><span class="pl-k">$</span><span class="pl-smi">Freq</span>),]
+<span class="pl-smi">likely_plot</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">likely_plot</span>[<span class="pl-smi">likely_plot</span><span class="pl-k">$</span><span class="pl-smi">Freq</span> <span class="pl-k">&gt;</span> <span class="pl-c1">0.02</span>,]
+
+<span class="pl-c">## make a sub graph as plotting them all is a big mess</span>
+<span class="pl-smi">sub_graph</span> <span class="pl-k">&lt;-</span> graph.neighborhood(<span class="pl-smi">graph</span>, 
+                                <span class="pl-v">order</span> <span class="pl-k">=</span> <span class="pl-c1">1</span>, 
+                                <span class="pl-v">nodes</span> <span class="pl-k">=</span> V(<span class="pl-smi">graph</span>)[<span class="pl-s"><span class="pl-pds">"</span>/example/96<span class="pl-pds">"</span></span> <span class="pl-k">%in%</span> as.character(<span class="pl-smi">likely_plot</span><span class="pl-k">$</span><span class="pl-smi">Var1</span>)]
+)[[<span class="pl-c1">1</span>]]
+
+
+<span class="pl-c">## the actual plot</span>
+<span class="pl-smi">edgeLabels</span> <span class="pl-k">&lt;-</span>  paste0(round(<span class="pl-e">igraph</span><span class="pl-k">::</span>E(<span class="pl-smi">sub_graph</span>)<span class="pl-k">$</span><span class="pl-smi">weight</span>, <span class="pl-c1">2</span>)<span class="pl-k">*</span><span class="pl-c1">100</span>,<span class="pl-s"><span class="pl-pds">"</span>%<span class="pl-pds">"</span></span>)
+plot(<span class="pl-smi">sub_graph</span>, <span class="pl-v">edge.label</span> <span class="pl-k">=</span> <span class="pl-smi">edgeLabels</span>, 
+     <span class="pl-v">vertex.size</span> <span class="pl-k">=</span> <span class="pl-c1">15</span>, 
+     <span class="pl-v">vertex.color</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>orange<span class="pl-pds">"</span></span>,
+     <span class="pl-c"># vertex.label = NA,</span>
+     <span class="pl-v">vertex.label.dist</span> <span class="pl-k">=</span> <span class="pl-c1">1</span>,
+     <span class="pl-v">vertex.label.cex</span><span class="pl-k">=</span><span class="pl-c1">1.5</span>,
+     <span class="pl-v">vertex.label.color</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>orange<span class="pl-pds">"</span></span>,
+     <span class="pl-v">edge.label</span><span class="pl-k">=</span><span class="pl-c1">1</span>,
+     <span class="pl-v">edge.label.cex</span><span class="pl-k">=</span><span class="pl-c1">1.5</span>,
+     <span class="pl-v">edge.width</span> <span class="pl-k">=</span><span class="pl-c1">1.5</span>,
+     <span class="pl-v">edge.lty</span> <span class="pl-k">=</span> <span class="pl-c1">2</span>,
+     <span class="pl-v">edge.color</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>brown<span class="pl-pds">"</span></span>,
+     <span class="pl-v">edge.curved</span> <span class="pl-k">=</span> <span class="pl-c1">TRUE</span>,
+     <span class="pl-v">edge.arrow.size</span> <span class="pl-k">=</span> <span class="pl-c1">1</span>,
+     <span class="pl-v">frame</span><span class="pl-k">=</span><span class="pl-c1">TRUE</span>,
+     <span class="pl-v">asp</span> <span class="pl-k">=</span> <span class="pl-c1">0.8</span>,
+     <span class="pl-v">margin</span> <span class="pl-k">=</span> <span class="pl-c1">0.2</span>,
+     <span class="pl-v">main</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>Example Markov Chain for Website<span class="pl-pds">"</span></span>)
+</pre></div>
+
+<h2>
+<a id="gtm-code-for-calling-opencpu" class="anchor" href="#gtm-code-for-calling-opencpu" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>GTM code for calling OpenCPU</h2>
+
+<p>The custom HTML tag code is shown below:</p>
+
+<h3>
+<a id="creating-a-cookie-to-record-url-pages-in-the-session" class="anchor" href="#creating-a-cookie-to-record-url-pages-in-the-session" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Creating a cookie to record URL pages in the session</h3>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">//Tag : Write SessionUrls to Cookie</span>
+<span class="pl-k">&lt;</span>script<span class="pl-k">&gt;</span>
+
+  str <span class="pl-k">=</span> {{Page Path}};
+
+  <span class="pl-c">// parsing URL to fit model</span>
+  index  <span class="pl-k">=</span> <span class="pl-smi">str</span>.<span class="pl-c1">indexOf</span>(<span class="pl-s"><span class="pl-pds">'</span>.html<span class="pl-pds">'</span></span>);
+  newUrl <span class="pl-k">=</span> <span class="pl-smi">str</span>.<span class="pl-c1">substring</span>(<span class="pl-smi">str</span>.<span class="pl-c1">lastIndexOf</span>(<span class="pl-s"><span class="pl-pds">"</span>/predictClickOpenCPU/<span class="pl-pds">"</span></span>),<span class="pl-smi">str</span>.<span class="pl-c1">lastIndexOf</span>(<span class="pl-s"><span class="pl-pds">"</span>.<span class="pl-pds">"</span></span>), index);
+
+  <span class="pl-c">// if existing cookie append pageURL, else record this one</span>
+  <span class="pl-k">if</span>({{sessionUrls}}){
+
+    sessionUrls <span class="pl-k">=</span> {{sessionUrls}} <span class="pl-k">+</span> <span class="pl-s"><span class="pl-pds">"</span>,<span class="pl-pds">"</span></span> <span class="pl-k">+</span> newUrl;
+
+  } <span class="pl-k">else</span> {
+
+    sessionUrls <span class="pl-k">=</span> newUrl;
+  }
+
+  <span class="pl-c">//write session cookie</span>
+  <span class="pl-c1">document</span>.<span class="pl-c1">cookie</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">'</span>sessionUrls=<span class="pl-pds">'</span></span> <span class="pl-k">+</span> sessionUrls;
+
+<span class="pl-k">&lt;</span><span class="pl-k">/</span>script<span class="pl-k">&gt;</span>
+</pre></div>
+
+<h3>
+<a id="calling-the-opencpu-server-and-putting-result-in-datalayer" class="anchor" href="#calling-the-opencpu-server-and-putting-result-in-datalayer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Calling the OpenCPU server and putting result in dataLayer</h3>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">//Tag Read from OpenCPU</span>
+<span class="pl-k">&lt;</span>script src<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>//code.jquery.com/jquery-1.10.2.min.js<span class="pl-pds">"</span></span><span class="pl-k">&gt;&lt;</span><span class="pl-k">/</span>script<span class="pl-k">&gt;</span> 
+<span class="pl-k">&lt;</span>script src<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>//www.opencpu.org/js/archive/opencpu-0.4.js<span class="pl-pds">"</span></span><span class="pl-k">&gt;&lt;</span><span class="pl-k">/</span>script<span class="pl-k">&gt;</span>
+<span class="pl-k">&lt;</span>script<span class="pl-k">&gt;</span>
+<span class="pl-c">//set CORS to call "predictClickOpenCPU" package on public server</span>
+<span class="pl-smi">ocpu</span>.<span class="pl-en">seturl</span>(<span class="pl-s"><span class="pl-pds">"</span>//MarkEdmondson1234.ocpu.io/predictClickOpenCPU/R<span class="pl-pds">"</span></span>)
+
+<span class="pl-c">//split character into array</span>
+<span class="pl-k">var</span> mydata <span class="pl-k">=</span> {{sessionUrls}}.<span class="pl-c1">split</span>(<span class="pl-s"><span class="pl-pds">"</span>,<span class="pl-pds">"</span></span>);
+
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(mydata);
+
+<span class="pl-c">//call R function: predictClickOpenCPU::predictMarkov(pageview_names=mydata)</span>
+<span class="pl-k">var</span> req <span class="pl-k">=</span> <span class="pl-smi">ocpu</span>.<span class="pl-en">rpc</span>(<span class="pl-s"><span class="pl-pds">"</span>predictMarkov<span class="pl-pds">"</span></span>, {
+    pageview_names <span class="pl-k">:</span> mydata
+  }, <span class="pl-k">function</span>(<span class="pl-smi">output</span>){
+    <span class="pl-smi">dataLayer</span>.<span class="pl-c1">push</span>({
+              <span class="pl-s"><span class="pl-pds">'</span>event<span class="pl-pds">'</span></span> <span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>openCPUcall<span class="pl-pds">'</span></span>,
+              <span class="pl-s"><span class="pl-pds">'</span>prediction<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-smi">output</span>.<span class="pl-smi">page</span>[<span class="pl-c1">0</span>],
+              <span class="pl-s"><span class="pl-pds">'</span>probability<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-smi">output</span>.<span class="pl-smi">probability</span>[<span class="pl-c1">0</span>]
+            });
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">"</span>R returned: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> output); 
+});
+
+<span class="pl-c">//optional</span>
+<span class="pl-smi">req</span>.<span class="pl-en">fail</span>(<span class="pl-k">function</span>(){
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">"</span>R returned an error: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-smi">req</span>.<span class="pl-smi">responseText</span>); 
+  });
+
+<span class="pl-k">&lt;</span><span class="pl-k">/</span>script<span class="pl-k">&gt;</span></pre></div>
       </section>
       <footer>
         <p>This project is maintained by <a href="https://github.com/MarkEdmondson1234">MarkEdmondson1234</a></p>
         <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
       </footer>
     </div>
+    <script src="javascripts/scale.fix.js"></script>
     
   </body>
 </html>
