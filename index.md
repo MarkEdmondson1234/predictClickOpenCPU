@@ -10,16 +10,11 @@ This presentation was given at MeasureCamp on the 5th March, 2016.  It will be a
 
 ## Example website
 
-A live example with a GTM container calling OpenCPU for content predictions, as shown in the presentation is available in this [Github project, here](/example/107.html)
+A live example with a GTM container calling OpenCPU for content predictions, as shown in the presentation is available in this [Github project, here](/predictClickOpenCPU/example/107.html)
 
 ## R package called from OpenCPU
 
 This Github repository is also the Github R library called by OpenCPU.  See the R code for the package and the [model data here.](https://github.com/MarkEdmondson1234/predictClickOpenCPU)
-
-## R code to generate the model
-
-The R code to create the model is shown below:
-
 
 ## Using OpenCPU
 
@@ -27,10 +22,43 @@ You can test the model works in the API by using the test public server.
 
 For production use though, you will want your own server, either using OpenCPU or the paid for alternatives such as [yhat](http://www.yhat.com) or [Domino Data Lab](https://www.dominodatalab.com)
 
+This Github repository is available on OpenCPU at this URL:
+[https://MarkEdmondson1234.ocpu.io/predictClickOpenCPU/](https://MarkEdmondson1234.ocpu.io/predictClickOpenCPU/)
+
+See details on how to use OpenCPU here: https://www.opencpu.org/api.html#api-ci
+
+### Test the R API package
+
+Test at: https://public.opencpu.org/ocpu/test/
+
+Create a POST hit to this URL:
+
+`https://MarkEdmondson1234.ocpu.io/predictClickOpenCPU/R/predictMarkov/json`
+
+...with the parameters:
+
+`pageview_names`
+
+`["/example/96","/example/213","/example/107"]`
+
+If successful you should see a 200 response code with the following JSON:
+
+```
+{
+  "page": ["da/search/tellus/planning-map"],
+  "probability": [0.9664]
+}
+```
+
+## R code to generate the model
+
+The R code to create the model is shown below:
+
 ### Fetching Google Analytics data
 
 ```r
-library(googleAnalyticsR) ## from https://github.com/MarkEdmondson1234/googleAnalyticsR_public
+## from https://github.com/MarkEdmondson1234/googleAnalyticsR_public
+library(googleAnalyticsR) 
 ga_auth()
 
 gaId <- xxxx # GA ViewId
