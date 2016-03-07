@@ -110,7 +110,7 @@
 <a id="fetching-google-analytics-data" class="anchor" href="#fetching-google-analytics-data" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Fetching Google Analytics data</h3>
 
 <div class="highlight highlight-source-r"><pre><span class="pl-c">## from https://github.com/MarkEdmondson1234/googleAnalyticsR_public</span>
-library(<span class="pl-smi">googleAnalyticsR</span>) 
+library(<span class="pl-smi">googleAnalyticsR</span>)
 ga_auth()
 
 <span class="pl-smi">gaId</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">xxxx</span> <span class="pl-c"># GA ViewId</span>
@@ -132,16 +132,16 @@ ga_auth()
 
 <div class="highlight highlight-source-r"><pre><span class="pl-smi">split_regex</span> <span class="pl-k">&lt;-</span> <span class="pl-s"><span class="pl-pds">"</span>u=(.+)&amp;t=(.+)<span class="pl-pds">"</span></span>
 
-<span class="pl-smi">processed</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">raw</span> %<span class="pl-k">&gt;</span>% <span class="pl-e">tidyr</span><span class="pl-k">::</span>extract(<span class="pl-smi">dimension3</span>, 
+<span class="pl-smi">processed</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">raw</span> %<span class="pl-k">&gt;</span>% <span class="pl-e">tidyr</span><span class="pl-k">::</span>extract(<span class="pl-smi">dimension3</span>,
                              c(<span class="pl-s"><span class="pl-pds">"</span>cid<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>timestamp<span class="pl-pds">"</span></span>),
                              <span class="pl-smi">split_regex</span>)
 
 <span class="pl-c">## javascript to R timestamp</span>
-<span class="pl-smi">processed</span><span class="pl-k">$</span><span class="pl-smi">timestamp</span> <span class="pl-k">&lt;-</span> as.POSIXct(as.numeric(<span class="pl-smi">processed</span><span class="pl-k">$</span><span class="pl-smi">timestamp</span>) <span class="pl-k">/</span> <span class="pl-c1">1000</span>, 
+<span class="pl-smi">processed</span><span class="pl-k">$</span><span class="pl-smi">timestamp</span> <span class="pl-k">&lt;-</span> as.POSIXct(as.numeric(<span class="pl-smi">processed</span><span class="pl-k">$</span><span class="pl-smi">timestamp</span>) <span class="pl-k">/</span> <span class="pl-c1">1000</span>,
                              <span class="pl-v">origin</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>1970-01-01<span class="pl-pds">"</span></span>)
 
 <span class="pl-c">## find users with session length &gt; 1</span>
-<span class="pl-smi">nonbounce</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">processed</span> %<span class="pl-k">&gt;</span>% group_by(<span class="pl-smi">cid</span>) %<span class="pl-k">&gt;</span>% 
+<span class="pl-smi">nonbounce</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">processed</span> %<span class="pl-k">&gt;</span>% group_by(<span class="pl-smi">cid</span>) %<span class="pl-k">&gt;</span>%
   summarise(<span class="pl-v">session_length</span> <span class="pl-k">=</span> n()) %<span class="pl-k">&gt;</span>% filter(<span class="pl-smi">session_length</span> <span class="pl-k">&gt;</span> <span class="pl-c1">1</span>) %<span class="pl-k">&gt;</span>% ungroup()
 
 <span class="pl-smi">processed</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">nonbounce</span> %<span class="pl-k">&gt;</span>% left_join(<span class="pl-smi">processed</span>)
@@ -149,7 +149,7 @@ ga_auth()
 <span class="pl-smi">processed</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">processed</span> %<span class="pl-k">&gt;</span>% arrange(<span class="pl-smi">cid</span>, <span class="pl-smi">timestamp</span>)
 
 <span class="pl-c">## for each cid, make a string of pagePath in timestamp order</span>
-<span class="pl-smi">sequence</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">processed</span> %<span class="pl-k">&gt;</span>% group_by(<span class="pl-smi">cid</span>) %<span class="pl-k">&gt;</span>% 
+<span class="pl-smi">sequence</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">processed</span> %<span class="pl-k">&gt;</span>% group_by(<span class="pl-smi">cid</span>) %<span class="pl-k">&gt;</span>%
   summarise(<span class="pl-v">sequence</span> <span class="pl-k">=</span> paste(<span class="pl-smi">aggregation</span>, <span class="pl-v">collapse</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>,<span class="pl-pds">"</span></span>))
 
 <span class="pl-smi">sequence</span> <span class="pl-k">&lt;-</span> paste(<span class="pl-smi">sequence</span><span class="pl-k">$</span><span class="pl-smi">cid</span>, <span class="pl-smi">sequence</span><span class="pl-k">$</span><span class="pl-smi">sequence</span>, <span class="pl-v">sep</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>,<span class="pl-pds">"</span></span>)
@@ -197,7 +197,7 @@ save(<span class="pl-smi">model</span>, <span class="pl-v">file</span><span clas
 <p>If you want to see the model, the below helps plot it:</p>
 
 <div class="highlight highlight-source-r"><pre>library(<span class="pl-smi">igraph</span>)
-<span class="pl-smi">example_graph</span> <span class="pl-k">&lt;-</span> <span class="pl-e">igraph</span><span class="pl-k">::</span>graph.adjacency(t(as.matrix(<span class="pl-smi">model</span><span class="pl-k">@</span><span class="pl-smi">transitions</span>[[<span class="pl-c1">1</span>]])), 
+<span class="pl-smi">example_graph</span> <span class="pl-k">&lt;-</span> <span class="pl-e">igraph</span><span class="pl-k">::</span>graph.adjacency(t(as.matrix(<span class="pl-smi">model</span><span class="pl-k">@</span><span class="pl-smi">transitions</span>[[<span class="pl-c1">1</span>]])),
                                  <span class="pl-v">weighted</span> <span class="pl-k">=</span> <span class="pl-c1">T</span>)
                                  <span class="pl-smi">likely_start</span> <span class="pl-k">&lt;-</span> as.data.frame(<span class="pl-smi">example_mc</span><span class="pl-k">@</span><span class="pl-smi">start</span>)
 <span class="pl-smi">likely_start</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">likely_start</span>[order(<span class="pl-smi">likely_start</span><span class="pl-k">$</span><span class="pl-smi">Freq</span>, <span class="pl-v">decreasing</span> <span class="pl-k">=</span> <span class="pl-c1">TRUE</span>),]
@@ -206,16 +206,16 @@ save(<span class="pl-smi">model</span>, <span class="pl-v">file</span><span clas
 <span class="pl-smi">likely_plot</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">likely_plot</span>[<span class="pl-smi">likely_plot</span><span class="pl-k">$</span><span class="pl-smi">Freq</span> <span class="pl-k">&gt;</span> <span class="pl-c1">0.02</span>,]
 
 <span class="pl-c">## make a sub graph as plotting them all is a big mess</span>
-<span class="pl-smi">sub_graph</span> <span class="pl-k">&lt;-</span> graph.neighborhood(<span class="pl-smi">graph</span>, 
-                                <span class="pl-v">order</span> <span class="pl-k">=</span> <span class="pl-c1">1</span>, 
+<span class="pl-smi">sub_graph</span> <span class="pl-k">&lt;-</span> graph.neighborhood(<span class="pl-smi">graph</span>,
+                                <span class="pl-v">order</span> <span class="pl-k">=</span> <span class="pl-c1">1</span>,
                                 <span class="pl-v">nodes</span> <span class="pl-k">=</span> V(<span class="pl-smi">graph</span>)[<span class="pl-s"><span class="pl-pds">"</span>/example/96<span class="pl-pds">"</span></span> <span class="pl-k">%in%</span> as.character(<span class="pl-smi">likely_plot</span><span class="pl-k">$</span><span class="pl-smi">Var1</span>)]
 )[[<span class="pl-c1">1</span>]]
 
 
 <span class="pl-c">## the actual plot</span>
 <span class="pl-smi">edgeLabels</span> <span class="pl-k">&lt;-</span>  paste0(round(<span class="pl-e">igraph</span><span class="pl-k">::</span>E(<span class="pl-smi">sub_graph</span>)<span class="pl-k">$</span><span class="pl-smi">weight</span>, <span class="pl-c1">2</span>)<span class="pl-k">*</span><span class="pl-c1">100</span>,<span class="pl-s"><span class="pl-pds">"</span>%<span class="pl-pds">"</span></span>)
-plot(<span class="pl-smi">sub_graph</span>, <span class="pl-v">edge.label</span> <span class="pl-k">=</span> <span class="pl-smi">edgeLabels</span>, 
-     <span class="pl-v">vertex.size</span> <span class="pl-k">=</span> <span class="pl-c1">15</span>, 
+plot(<span class="pl-smi">sub_graph</span>, <span class="pl-v">edge.label</span> <span class="pl-k">=</span> <span class="pl-smi">edgeLabels</span>,
+     <span class="pl-v">vertex.size</span> <span class="pl-k">=</span> <span class="pl-c1">15</span>,
      <span class="pl-v">vertex.color</span><span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>orange<span class="pl-pds">"</span></span>,
      <span class="pl-c"># vertex.label = NA,</span>
      <span class="pl-v">vertex.label.dist</span> <span class="pl-k">=</span> <span class="pl-c1">1</span>,
@@ -271,7 +271,7 @@ plot(<span class="pl-smi">sub_graph</span>, <span class="pl-v">edge.label</span>
 <a id="calling-the-opencpu-server-and-putting-result-in-datalayer" class="anchor" href="#calling-the-opencpu-server-and-putting-result-in-datalayer" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Calling the OpenCPU server and putting result in dataLayer</h3>
 
 <div class="highlight highlight-source-js"><pre><span class="pl-c">//Tag Read from OpenCPU</span>
-<span class="pl-k">&lt;</span>script src<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>//code.jquery.com/jquery-1.10.2.min.js<span class="pl-pds">"</span></span><span class="pl-k">&gt;&lt;</span><span class="pl-k">/</span>script<span class="pl-k">&gt;</span> 
+<span class="pl-k">&lt;</span>script src<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>//code.jquery.com/jquery-1.10.2.min.js<span class="pl-pds">"</span></span><span class="pl-k">&gt;&lt;</span><span class="pl-k">/</span>script<span class="pl-k">&gt;</span>
 <span class="pl-k">&lt;</span>script src<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>//www.opencpu.org/js/archive/opencpu-0.4.js<span class="pl-pds">"</span></span><span class="pl-k">&gt;&lt;</span><span class="pl-k">/</span>script<span class="pl-k">&gt;</span>
 <span class="pl-k">&lt;</span>script<span class="pl-k">&gt;</span>
 <span class="pl-c">//set CORS to call "predictClickOpenCPU" package on public server</span>
@@ -291,12 +291,12 @@ plot(<span class="pl-smi">sub_graph</span>, <span class="pl-v">edge.label</span>
               <span class="pl-s"><span class="pl-pds">'</span>prediction<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-smi">output</span>.<span class="pl-smi">page</span>[<span class="pl-c1">0</span>],
               <span class="pl-s"><span class="pl-pds">'</span>probability<span class="pl-pds">'</span></span><span class="pl-k">:</span> <span class="pl-smi">output</span>.<span class="pl-smi">probability</span>[<span class="pl-c1">0</span>]
             });
-    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">"</span>R returned: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> output); 
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">"</span>R returned: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> output);
 });
 
 <span class="pl-c">//optional</span>
 <span class="pl-smi">req</span>.<span class="pl-en">fail</span>(<span class="pl-k">function</span>(){
-    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">"</span>R returned an error: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-smi">req</span>.<span class="pl-smi">responseText</span>); 
+    <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">"</span>R returned an error: <span class="pl-pds">"</span></span> <span class="pl-k">+</span> <span class="pl-smi">req</span>.<span class="pl-smi">responseText</span>);
   });
 
 <span class="pl-k">&lt;</span><span class="pl-k">/</span>script<span class="pl-k">&gt;</span></pre></div>
@@ -314,11 +314,15 @@ plot(<span class="pl-smi">sub_graph</span>, <span class="pl-v">edge.label</span>
 
           <p class="repo-owner"><a href="https://github.com/MarkEdmondson1234/predictClickOpenCPU"></a> is maintained by <a href="https://github.com/MarkEdmondson1234">MarkEdmondson1234</a>.</p>
 
+          <p class="repo-owner"><a href="http://markedmondson.me"></a>He blogs at <a href="http://markedmondson.me">MarkEdmondson.me</a></p>
+
+          <p class="repo-owner"><a href="http://twitter.com/HoloMarkeD"></a>...and tweets at <a href="http://twitter.com/HoloMarkeD">@HoloMarkeD</a></p>
+
           <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
         </aside>
       </div>
     </div>
 
-  
+
   </body>
 </html>
