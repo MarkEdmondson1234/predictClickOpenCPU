@@ -1,6 +1,6 @@
 # Connecting R and Google Tag Manager with OpenCPU
 
-Enriching the dataLAyer of Google Tag Manager with data from R functions opens up many possibilities.  This is possible with [OpenCPU](https://www.opencpu.org), which turns R packages into a robust API.
+Enriching the dataLayer of Google Tag Manager with data from R functions opens up many possibilities.  This is possible with [OpenCPU](https://www.opencpu.org), which turns R packages into a robust API.
 
 An example and proof of concept is shown below, taking the example of a content recommendation engine making predictions based on what a user has viewed in their session.
 
