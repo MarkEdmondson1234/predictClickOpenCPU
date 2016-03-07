@@ -18,6 +18,14 @@ This Github repository is also the Github R library called by OpenCPU.  See the 
 
 ## Using OpenCPU
 
+### Creating a webhook
+
+Make a Github webhook to OpenCPU, and then every push to Github will be mirrored onto the OpenCPU server.
+
+![github webhook](github_webhook.png)
+
+### Testing the model API works
+
 You can test the model works in the API by using the test public server. 
 
 For production use though, you will want your own server, either using OpenCPU or the paid for alternatives such as [yhat](http://www.yhat.com) or [Domino Data Lab](https://www.dominodatalab.com)
@@ -49,6 +57,9 @@ If successful you should see a 200 response code with the following JSON:
   "probability": [0.9664]
 }
 ```
+
+![good test opencpu](openCPUdemo.png)
+
 
 ## R code to generate the model
 
