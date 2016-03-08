@@ -129,7 +129,8 @@ ga_auth()
 <a id="transforming-the-data-into-a-form-suitable-for-the-the-model" class="anchor" href="#transforming-the-data-into-a-form-suitable-for-the-the-model" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Transforming the data into a form suitable for the the model</h3>
 
 <div class="highlight highlight-source-r"><pre><span class="pl-smi">split_regex</span> <span class="pl-k">&lt;-</span> <span class="pl-s"><span class="pl-pds">"</span>u=(.+)&amp;t=(.+)<span class="pl-pds">"</span></span>
-
+library(<span class="pl-smi">dplyr</span>)
+library(<span class="pl-smi">tidyr</span>)
 <span class="pl-smi">processed</span> <span class="pl-k">&lt;-</span> <span class="pl-smi">raw</span> %<span class="pl-k">&gt;</span>% <span class="pl-e">tidyr</span><span class="pl-k">::</span>extract(<span class="pl-smi">dimension3</span>,
                              c(<span class="pl-s"><span class="pl-pds">"</span>cid<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>timestamp<span class="pl-pds">"</span></span>),
                              <span class="pl-smi">split_regex</span>)
