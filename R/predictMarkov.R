@@ -27,7 +27,7 @@ predictMarkov <- function(pageview_names) {
 #' @import markovchain
 predictNextPage <- function(current_url){
 
-  current_url <- current_url[current_url != "/a-z/undefined"]
+  current_url <- current_url[!grepl("undefined", current_url)]
 
   message("Predicting next page for ", current_url)
 
