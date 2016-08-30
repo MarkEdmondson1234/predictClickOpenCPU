@@ -31,12 +31,21 @@ predictNextPage <- function(current_url){
 
   markovList <-  mcfL$estimate
   out <- try(predict(markovList, newdata = current_url), silent = TRUE)
+
   if(inherits(out, "try-error")){
-    message("No prediction available")
-    return(NULL)
-  } else {
-    out
+
+    ## try just with last 2 pages
+    ll <- length(current_url)
+    retry_urls <- current_url[(ll-1):ll]
+    out <- try(predict(markovList, newdata = retry_urls), silent = TRUE)
+
+    if(inherits(out, "try-error")){
+      message("No prediction available")
+      return(NULL)
+    }
   }
+
+  out
 }
 
 
