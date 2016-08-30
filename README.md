@@ -6,3 +6,5 @@ The presentation is here:
 http://code.markedmondson.me/predictClickOpenCPU/creatingContentRecEngine_presentation
 
 See code examples and details at http://code.markedmondson.me/predictClickOpenCPU/ 
+
+Test for http://104.155.3.94/ocpu/test/
