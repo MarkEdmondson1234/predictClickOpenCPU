@@ -36,9 +36,9 @@ predictNextPage <- function(current_url){
 
   if(inherits(out, "try-error")){
 
-    ## try just with last 2 pages
+    ## try just with last page
     ll <- length(current_url)
-    retry_urls <- current_url[(ll-1):ll]
+    retry_urls <- current_url[ll]
     out <- try(predict(markovList, newdata = retry_urls), silent = TRUE)
 
     if(inherits(out, "try-error")){
