@@ -2,7 +2,7 @@
 % Please edit documentation in R/predictMarkov.R
 \name{predictMarkov}
 \alias{predictMarkov}
-\title{Take 3 pageviews, output Markov model prediction}
+\title{Take some pageviews, output Markov model prediction}
 \usage{
 predictMarkov(pageview_names)
 }
@@ -13,6 +13,6 @@ predictMarkov(pageview_names)
 The prediction
 }
 \description{
-Take 3 pageviews, output Markov model prediction
+Take some pageviews, output Markov model prediction
 }
 

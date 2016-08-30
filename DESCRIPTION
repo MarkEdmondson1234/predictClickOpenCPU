@@ -8,6 +8,7 @@ Description: OpenCPU calls this to predict the next pageview
 License: MIT
 Imports:
     clickstream (>= 1.1.5),
-    stringr (>= 1.0.0)
+    stringr (>= 1.0.0),
+    markovchain (>= 0.4.4)
 LazyData: TRUE
 RoxygenNote: 5.0.1

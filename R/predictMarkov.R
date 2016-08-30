@@ -20,6 +20,25 @@ predictMarkov <- function(pageview_names) {
        probability = predit@probability)
 }
 
+#' Predict next page model 2
+#'
+#' @param current_url the url to predict from
+#' @export
+#' @import markovchain
+predictNextPage <- function(current_url){
+
+  message("Predicting next page for ", current_url)
+
+  markovList <-  mcfL$estimate
+  out <- try(predict(markovList, newdata = current_url), silent = TRUE)
+  if(inherits(out, "try-error")){
+    message("No prediction available")
+    return(NULL)
+  } else {
+    out
+  }
+}
+
 
 #' Replace a string with substitutions
 #'
