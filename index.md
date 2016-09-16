@@ -12,6 +12,12 @@ The overview of the data architecture from the presenation is here:
 
 ![data architecture](predictClickDataArchitecture.png)
 
+## Supercharging websites with a real-time R API
+
+This presentation was given at EARL London on the 15th September, 2016.  It built on the talk above after an idea from [Vincent Terrasi](https://data-seo.com/) to use the technique for pre-fetching webpages.
+
+The presentation is [available here.](supercharge.html)
+
 ## Example website
 
 A live example with a GTM container calling OpenCPU for content predictions, as shown in the presentation is available in this [Github project, here](/predictClickOpenCPU/example/107.html)
